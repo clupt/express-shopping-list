@@ -3,7 +3,7 @@ const app = express();
 
 // useful error class to throw
 const { NotFoundError, BadRequestError } = require("./expressError");
-
+const itemsRoutes = require("./items");
 // process JSON body => req.body
 app.use(express.json());
 
@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 
-
+app.use("/items", itemsRoutes)
 
 
 
