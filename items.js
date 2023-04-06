@@ -9,7 +9,7 @@ const db = require("./fakeDb");
 
 /** return list of shopping items */
 router.get("/", function (req, res) {
-  return res.json(db.items);
+  return res.json({"items":db.items});
 });
 
 /** take JSON body, add item to list, return new item */
@@ -53,6 +53,16 @@ router.patch("/:name", function (req, res){
   }
 })
 
-/** delete item */
+/** if item is found, delete item*/
+
+router.delete("/:name", function (req, res){
+
+  const itemIndex = db.items.findIndex(i => i.name === req.params.name);
+  if(itemIndex===-1) throw new BadRequestError("item not found");
+
+  db.items.splice(itemIndex, 1);
+  return res.json({message:"deleted"})
+
+})
 
 module.exports = router;
